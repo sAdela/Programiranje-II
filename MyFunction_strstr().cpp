@@ -2,8 +2,8 @@
 using namespace std;
 
 
-const char* strstr1(const char* string, const char* substring) {	//I created function that does what strstr() does.												
-	const char *Pointer = nullptr;							//	(Find substring in string, and return pointer on place where substring in string starts)
+const char* strstr1(const char* string, const char* substring) {//I created function that does what strstr() does.												
+	const char *Pointer = nullptr;	//(Find substring in string, and return pointer on place where substring in string starts)
 	int lenghtOf_Substring = strlen(substring);
 	int lenghtOf_String = strlen(string);
 	int counter = 0, counterOf_Correct = 0;
