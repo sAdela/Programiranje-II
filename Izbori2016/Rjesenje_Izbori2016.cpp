@@ -76,7 +76,7 @@ struct Izbori2016 {
 	void Unos(Opstina opstina) {
 		// 	1. Unos - na osnovu vrijednosti primljenih parametara, inicijalizovati vrijednosti atributa strukture.
 
-		_glasackoMjesto = new Opstina(opstina); // &opstina
+		_glasackoMjesto = new Opstina(opstina); 
 												/*for (int i = 0; i < 1000; i++)
 												_glasovi[i] = nullptr;*/
 		_doSadaGlasalo = 0;
