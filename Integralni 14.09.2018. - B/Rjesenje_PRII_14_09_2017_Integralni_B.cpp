@@ -5,10 +5,10 @@ using namespace std;
 /*
 1. BROJ I VRSTA PARAMETARA MORAJU BITI IDENTICNI KAO U PRIMJERIMA. U SUPROTNOM SE RAD NECE BODOVATI
 2. STAVITE KOMENTAR NA DIJELOVE CODE-A KOJE NE BUDETE IMPLEMENTIRALI
-3. KREIRAJTE .DOC FAJL SA VA≈†IM BROJEM INDEKSA ( NPR. IB160061.DOC BEZ IMENA I PREZIMENA), TE NA KRAJU ISPITA U NJEGA KOPIRAJTE RJE≈†ENJA VA≈†IH ZADATAKA. NE PREDAVATI .TXT ILI .CPP FAJLOVE
-4. TOKOM IZRADE ISPITA NIJE DOZVOLJENO KORI≈†TENJE HELP-A
-5. TOKOM IZRADE ISPITA MOGU BITI POKRENUTA SAMO TRI PROGRAMA: PDF READER (ISPITNI ZADACI), MS VISUAL STUDIO, MS WORD (U KOJI CETE KOPIRATI VA≈†A RJE≈†ENJA)
-6. BEZ OBZIRA NA TO DA LI SU ISPITNI ZADACI URA√êENI, SVI STUDENTI KOJI SU PRISTUPILI ISPITU MORAJU PREDATI SVOJ RAD
+3. KREIRAJTE .DOC FAJL SA VAäIM BROJEM INDEKSA ( NPR. IB160061.DOC BEZ IMENA I PREZIMENA), TE NA KRAJU ISPITA U NJEGA KOPIRAJTE RJEäENJA VAäIH ZADATAKA. NE PREDAVATI .TXT ILI .CPP FAJLOVE
+4. TOKOM IZRADE ISPITA NIJE DOZVOLJENO KORIäTENJE HELP-A
+5. TOKOM IZRADE ISPITA MOGU BITI POKRENUTA SAMO TRI PROGRAMA: PDF READER (ISPITNI ZADACI), MS VISUAL STUDIO, MS WORD (U KOJI CETE KOPIRATI VAäA RJEäENJA)
+6. BEZ OBZIRA NA TO DA LI SU ISPITNI ZADACI URA–ENI, SVI STUDENTI KOJI SU PRISTUPILI ISPITU MORAJU PREDATI SVOJ RAD
 */
 
 const char * not_set = "NEMA_VRIJEDNOST";
@@ -354,11 +354,11 @@ int main() {
 	//parametri: brojIndeksa, tema
 	multimedijalni.Unos("IB120021", "Multimedijalni informacijski sistem za visoko - obrazovnu ustanovu");
 	ZavrsniRad podrsa_operaterima;
-	podrsa_operaterima.Unos("IB130031", "Sistem za podr≈°ku rada kablovskog operatera");
+	podrsa_operaterima.Unos("IB130031", "Sistem za podröku rada kablovskog operatera");
 	ZavrsniRad analiza_sigurnosti;
-	analiza_sigurnosti.Unos("IB140041", "Prakticna analiza sigurnosti be≈æi√®nih ra√®unarskih mre≈æa");
+	analiza_sigurnosti.Unos("IB140041", "Prakticna analiza sigurnosti beûiËnih raËunarskih mreûa");
 	ZavrsniRad kriptografija;
-	kriptografija.Unos("IB120021", "Primjena teorije informacija u procesu generisanja kriptografskih klju√®eva");
+	kriptografija.Unos("IB120021", "Primjena teorije informacija u procesu generisanja kriptografskih kljuËeva");
 
 	/*u zavrsni rad dodaje novo poglavlje i njegov sadrzaj. ukoliko poglavlje vec postoji u zavrsnom radu, funkcija tom poglavlju treba dodati novi sadrzaj i pri tome zadrzi postojeci (izmedju postojeceg i novog sadrzaja se dodaje prazan prostor). u slucaju da poglavlje ne postoji, ono se dodaje zajedno sa sadrzajem*/
 	//parametri: nazivPoglavlja, sadrzajPoglavlja
