@@ -246,6 +246,7 @@ struct Nastavnik {
 					return false;
 			}
 		}
+		return true;
 	}
 
 	bool DodajZavrsniRad(ZavrsniRad rad) {
