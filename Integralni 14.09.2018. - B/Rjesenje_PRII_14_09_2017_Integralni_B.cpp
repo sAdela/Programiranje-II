@@ -5,10 +5,10 @@ using namespace std;
 /*
 1. BROJ I VRSTA PARAMETARA MORAJU BITI IDENTICNI KAO U PRIMJERIMA. U SUPROTNOM SE RAD NECE BODOVATI
 2. STAVITE KOMENTAR NA DIJELOVE CODE-A KOJE NE BUDETE IMPLEMENTIRALI
-3. KREIRAJTE .DOC FAJL SA VAäIM BROJEM INDEKSA ( NPR. IB160061.DOC BEZ IMENA I PREZIMENA), TE NA KRAJU ISPITA U NJEGA KOPIRAJTE RJEäENJA VAäIH ZADATAKA. NE PREDAVATI .TXT ILI .CPP FAJLOVE
-4. TOKOM IZRADE ISPITA NIJE DOZVOLJENO KORIäTENJE HELP-A
-5. TOKOM IZRADE ISPITA MOGU BITI POKRENUTA SAMO TRI PROGRAMA: PDF READER (ISPITNI ZADACI), MS VISUAL STUDIO, MS WORD (U KOJI CETE KOPIRATI VAäA RJEäENJA)
-6. BEZ OBZIRA NA TO DA LI SU ISPITNI ZADACI URA–ENI, SVI STUDENTI KOJI SU PRISTUPILI ISPITU MORAJU PREDATI SVOJ RAD
+3. KREIRAJTE .DOC FAJL SA VA≈†IM BROJEM INDEKSA ( NPR. IB160061.DOC BEZ IMENA I PREZIMENA), TE NA KRAJU ISPITA U NJEGA KOPIRAJTE RJE≈†ENJA VA≈†IH ZADATAKA. NE PREDAVATI .TXT ILI .CPP FAJLOVE
+4. TOKOM IZRADE ISPITA NIJE DOZVOLJENO KORI≈†TENJE HELP-A
+5. TOKOM IZRADE ISPITA MOGU BITI POKRENUTA SAMO TRI PROGRAMA: PDF READER (ISPITNI ZADACI), MS VISUAL STUDIO, MS WORD (U KOJI CETE KOPIRATI VA≈†A RJE≈†ENJA)
+6. BEZ OBZIRA NA TO DA LI SU ISPITNI ZADACI URA√êENI, SVI STUDENTI KOJI SU PRISTUPILI ISPITU MORAJU PREDATI SVOJ RAD
 */
 
 const char * not_set = "NEMA_VRIJEDNOST";
@@ -225,12 +225,8 @@ struct Nastavnik {
 		return nullptr;
 
 	}
-
-	bool DodajZavrsniRad(ZavrsniRad rad) {
-		/*funkcija DodajZavrsniRad ima zadatak da odredjenom nastavniku dodijeli mentorstvo na zavrsnom radu.
-		sprijeciti dodavanje zavrsnih radova sa istom temom kao i mogucnost da jedan student kod istog
-		nastavnika posjeduje vise zavrsnih radova*/
-
+	
+	bool ProvjeriUslove(ZavrsniRad rad){
 		if (_teme[max_zavrsnih - 1] != nullptr)
 			return false;
 
@@ -250,7 +246,16 @@ struct Nastavnik {
 					return false;
 			}
 		}
+	}
 
+	bool DodajZavrsniRad(ZavrsniRad rad) {
+		/*funkcija DodajZavrsniRad ima zadatak da odredjenom nastavniku dodijeli mentorstvo na zavrsnom radu.
+		sprijeciti dodavanje zavrsnih radova sa istom temom kao i mogucnost da jedan student kod istog
+		nastavnika posjeduje vise zavrsnih radova*/
+
+		if (!ProvjeriUslove(rad))
+			return false;
+		
 		for (int i = 0; i < max_zavrsnih; i++) {
 			if (_teme[i] == nullptr) {
 
@@ -258,6 +263,7 @@ struct Nastavnik {
 				_teme[i]->Unos(rad._brojIndeksa, rad._tema);
 				_teme[i]->_datumOdbrane = AlocirajNizKaraktera(rad._datumOdbrane);
 				_teme[i]->_konacnaOcjena = rad._konacnaOcjena;
+				
 				for (int j = 0; j < rad._trenutnoPoglavlja; j++) {
 
 					_teme[i]->DodajPoglavlje(rad._poglavljaRada[j]->_naslov, rad._poglavljaRada[j]->_sadrzaj);
@@ -354,11 +360,11 @@ int main() {
 	//parametri: brojIndeksa, tema
 	multimedijalni.Unos("IB120021", "Multimedijalni informacijski sistem za visoko - obrazovnu ustanovu");
 	ZavrsniRad podrsa_operaterima;
-	podrsa_operaterima.Unos("IB130031", "Sistem za podröku rada kablovskog operatera");
+	podrsa_operaterima.Unos("IB130031", "Sistem za podr≈°ku rada kablovskog operatera");
 	ZavrsniRad analiza_sigurnosti;
-	analiza_sigurnosti.Unos("IB140041", "Prakticna analiza sigurnosti beûiËnih raËunarskih mreûa");
+	analiza_sigurnosti.Unos("IB140041", "Prakticna analiza sigurnosti be≈æi√®nih ra√®unarskih mre≈æa");
 	ZavrsniRad kriptografija;
-	kriptografija.Unos("IB120021", "Primjena teorije informacija u procesu generisanja kriptografskih kljuËeva");
+	kriptografija.Unos("IB120021", "Primjena teorije informacija u procesu generisanja kriptografskih klju√®eva");
 
 	/*u zavrsni rad dodaje novo poglavlje i njegov sadrzaj. ukoliko poglavlje vec postoji u zavrsnom radu, funkcija tom poglavlju treba dodati novi sadrzaj i pri tome zadrzi postojeci (izmedju postojeceg i novog sadrzaja se dodaje prazan prostor). u slucaju da poglavlje ne postoji, ono se dodaje zajedno sa sadrzajem*/
 	//parametri: nazivPoglavlja, sadrzajPoglavlja
