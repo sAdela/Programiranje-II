@@ -72,10 +72,7 @@ Putnik GetNovogPutnika(const char* oznaka, const char* imePrezime) {
 	return novi;
 }
 
-bool DodajPutnika(Let &let, Putnik putnik) {
-	//	DodajPutnika - podatke o novom putniku dodaje u listu (niz) putnika na proslijedjenom letu. 
-	//	Onemoguciti dodavanje putnika sa istim imenom i prezimenom,
-	//	nepostojecom lokacijom sjedista ili u slucaju da su sva mjesta popunjena
+bool ProvjeriUslove(Let &let, Putnik putnik){
 	int prvi, drugi;
 	for (int i = 0; i < let._trenutnoPutnika; i++)
 		if (strcmp(let._putnici[i]._imePrezime, putnik._imePrezime) == 0)
@@ -90,7 +87,17 @@ bool DodajPutnika(Let &let, Putnik putnik) {
 		return false;
 	if (drugi >= let._brojKolonaUAvionu)
 		return false;
+	return true;
+}
 
+bool DodajPutnika(Let &let, Putnik putnik) {
+	//	DodajPutnika - podatke o novom putniku dodaje u listu (niz) putnika na proslijedjenom letu. 
+	//	Onemoguciti dodavanje putnika sa istim imenom i prezimenom,
+	//	nepostojecom lokacijom sjedista ili u slucaju da su sva mjesta popunjena
+	
+	if(!ProvjeriUslove(let, putnik))
+		return false;
+	
 	int vel;
 	Putnik *novi = new Putnik[let._trenutnoPutnika + 1];
 	for (int i = 0; i < let._trenutnoPutnika; i++) {
