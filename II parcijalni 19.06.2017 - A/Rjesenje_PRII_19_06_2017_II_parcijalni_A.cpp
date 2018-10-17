@@ -1,5 +1,4 @@
-﻿#include <iostream>
-using namespace std;
+
 /*
 1. BROJ I VRSTA PARAMETARA MORAJU BITI IDENTICNI KAO U PRIMJERIMA. U SUPROTNOM SE RAD NEĆE BODOVATI
 2. STAVITE KOMENTAR NA DIJELOVE CODE-A KOJE NE BUDETE IMPLEMENTIRALI
@@ -9,8 +8,8 @@ using namespace std;
 6. BEZ OBZIRA NA TO DA LI SU ISPITNI ZADACI URAĐENI, SVI STUDENTI KOJI SU PRISTUPILI ISPITU MORAJU PREDATI SVOJ RAD
 */
 //narednu liniju code-a ignorisite, osim u slucaju da vam bude predstavljala smetnje u radu
-#pragma warning(disable:4996)
-
+#include<iostream>
+using namespace std;
 const char *crt = "\n-------------------------------------------\n";
 
 enum eNacinStudiranja { REDOVAN, DL };
@@ -57,7 +56,7 @@ struct DatumVrijeme {
 	}
 
 	int PretvoriUDane() {
-		return *_dan +  *_mjesec * 30 + *_godina * 365;
+		return *_dan + *_mjesec * 30 + *_godina * 365;
 	}
 
 	void Ispis() {
@@ -130,26 +129,16 @@ struct Kandidat {
 		delete[] _imePrezime; _imePrezime = nullptr;
 		for (size_t i = 0; i < 4; i++)
 			if (_uspjeh[i] != nullptr)
-			_uspjeh[i]->Dealociraj();
+				_uspjeh[i]->Dealociraj();
 	}
 	void Ispis() {
 		cout << crt << _imePrezime << " " << _nacinStudiranja;
 		for (size_t i = 0; i < 4; i++)
 			if (_uspjeh[i] != nullptr)
-			_uspjeh[i]->Ispis();
+				_uspjeh[i]->Ispis();
 	}
 
-	bool DodajPredmet(eRazred razred, Predmet predmet) {
-
-		//uspjeh (tokom srednjoskolskog obrazovanja) se dodaje za svaki predmet na nivou razreda.
-		//prilikom dodavanja onemoguciti:
-		//- dodavanje predmeta za razrede koji nisu definisani enumeracijom,
-		//- dodavanje istoimenih predmeta na nivou jednog razreda,
-		//- dodavanje predmeta nakon dozvoljenog roka za prijavu (rokZaPrijavu).
-		//razredi (predmeti ili uspjeh) ne moraju biti dodavani sortiranim redoslijedom 
-		//(npr. prvo se moze dodati uspjeh za II razred, pa onda za I razred i sl.). 
-		//Funkcija vraca true ili false u zavisnosti od (ne)uspjesnost izvrsenja
-
+	bool ProvjeriUslove(eRazred razred, Predmet predmet) {
 		if (razred < 1 || razred > 4) return false;
 
 		int raz = int(razred) - 1;
@@ -165,6 +154,24 @@ struct Kandidat {
 
 		if (rokZaPrijavu.PretvoriUDane() <= predmet._datumUnosa->PretvoriUDane())
 			return false;
+		return true;
+	}
+
+	bool DodajPredmet(eRazred razred, Predmet predmet) {
+
+		//uspjeh (tokom srednjoskolskog obrazovanja) se dodaje za svaki predmet na nivou razreda.
+		//prilikom dodavanja onemoguciti:
+		//- dodavanje predmeta za razrede koji nisu definisani enumeracijom,
+		//- dodavanje istoimenih predmeta na nivou jednog razreda,
+		//- dodavanje predmeta nakon dozvoljenog roka za prijavu (rokZaPrijavu).
+		//razredi (predmeti ili uspjeh) ne moraju biti dodavani sortiranim redoslijedom 
+		//(npr. prvo se moze dodati uspjeh za II razred, pa onda za I razred i sl.). 
+		//Funkcija vraca true ili false u zavisnosti od (ne)uspjesnost izvrsenja
+
+		if (!ProvjeriUslove(razred, predmet))
+			return false;
+
+		int raz = int(razred) - 1;
 
 		if (_uspjeh[raz] == nullptr) {
 			_uspjeh[raz] = make_shared<Uspjeh>();
@@ -175,7 +182,7 @@ struct Kandidat {
 		for (int i = 0; i < _uspjeh[raz]->_brojPredmeta; i++) {
 
 			novi[i].Unos(_uspjeh[raz]->_predmeti[i]._naziv, _uspjeh[raz]->_predmeti[i]._ocjena, *_uspjeh[raz]->_predmeti[i]._datumUnosa);
-			
+
 			_uspjeh[raz]->_predmeti[i].Dealociraj();
 		}
 		novi[_uspjeh[raz]->_brojPredmeta].Unos(predmet._naziv, predmet._ocjena, *predmet._datumUnosa);
@@ -200,20 +207,20 @@ Kandidat *rekNajboljaOcjena(Kandidat *kandidat, int brojKandidata, const char* p
 	if (brojKandidata - 1 < 0)
 		return najbolji;
 
-	if (kandidat[brojKandidata-1]._uspjeh[razred] != nullptr) {
+	if (kandidat[brojKandidata - 1]._uspjeh[razred] != nullptr) {
 
 		if (razred < 0)
 			return rekNajboljaOcjena(kandidat, brojKandidata - 1, predmet, najbolji, razred, brojPredmeta, najveca);
 
-		else if (brojPredmeta == kandidat[brojKandidata-1]._uspjeh[razred]->_brojPredmeta)
+		else if (brojPredmeta == kandidat[brojKandidata - 1]._uspjeh[razred]->_brojPredmeta)
 			return rekNajboljaOcjena(kandidat, brojKandidata, predmet, najbolji, razred - 1, 0, najveca);
-		 
-		else if (strcmp(kandidat[brojKandidata-1]._uspjeh[razred]->_predmeti[kandidat[brojKandidata-1]._uspjeh[razred]->_brojPredmeta - 1]._naziv, predmet) == 0) {
-			
-			if (kandidat[brojKandidata-1]._uspjeh[razred]->_predmeti[kandidat[brojKandidata-1]._uspjeh[razred]->_brojPredmeta - 1]._ocjena > najveca) {
-			
-				najveca = kandidat[brojKandidata-1]._uspjeh[razred]->_predmeti[kandidat[brojKandidata-1]._uspjeh[razred]->_brojPredmeta - 1]._ocjena;
-				brojPredmeta = kandidat[brojKandidata-1]._uspjeh[razred]->_brojPredmeta - 1;
+
+		else if (strcmp(kandidat[brojKandidata - 1]._uspjeh[razred]->_predmeti[kandidat[brojKandidata - 1]._uspjeh[razred]->_brojPredmeta - 1]._naziv, predmet) == 0) {
+
+			if (kandidat[brojKandidata - 1]._uspjeh[razred]->_predmeti[kandidat[brojKandidata - 1]._uspjeh[razred]->_brojPredmeta - 1]._ocjena > najveca) {
+
+				najveca = kandidat[brojKandidata - 1]._uspjeh[razred]->_predmeti[kandidat[brojKandidata - 1]._uspjeh[razred]->_brojPredmeta - 1]._ocjena;
+				brojPredmeta = kandidat[brojKandidata - 1]._uspjeh[razred]->_brojPredmeta - 1;
 				najbolji = &kandidat[brojKandidata - 1];
 
 				return rekNajboljaOcjena(kandidat, brojKandidata - 1, predmet, najbolji, razred, brojPredmeta + 1, najveca);
@@ -221,13 +228,13 @@ Kandidat *rekNajboljaOcjena(Kandidat *kandidat, int brojKandidata, const char* p
 
 			else return rekNajboljaOcjena(kandidat, brojKandidata, predmet, najbolji, razred, brojPredmeta + 1, najveca);
 		}
-		else 
+		else
 			return rekNajboljaOcjena(kandidat, brojKandidata, predmet, najbolji, razred, brojPredmeta + 1, najveca);
-		
+
 	}
 	else
 		return rekNajboljaOcjena(kandidat, brojKandidata, predmet, najbolji, razred - 1, 0, najveca);
-	
+
 }
 
 
@@ -289,11 +296,11 @@ void main()
 	//(na nivou razreda, a ne ukupni prosjek). ukoliko vise kandidata ima isti prosjek funkcija vraca uspjeh (najboljeg razreda)
 	//prvog pronadjenog kandidata
 	//*/
-	auto najboljiUspjeh = [=](){
+	auto najboljiUspjeh = [=]() {
 		float suma = 0, max = 0;
 		int indexI = 0, indexJ = 0;
-		
-		
+
+
 		for (int i = 0; i < brojKandidata; i++) {
 
 			for (int j = 0; j < 4; j++) {
@@ -316,7 +323,7 @@ void main()
 			}
 		}
 		return prijave2017[indexI]._uspjeh[indexJ];
-		
+
 	};
 	shared_ptr<Uspjeh> najbolji = najboljiUspjeh();
 	najbolji->Ispis();
